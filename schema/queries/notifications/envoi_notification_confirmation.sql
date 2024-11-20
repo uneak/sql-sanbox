@@ -1,0 +1,1 @@
+-- Envoi de notification de confirmation (à gérer côté application)
