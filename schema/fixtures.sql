@@ -1,12 +1,12 @@
 
 -- -----------------------------------------------------
--- Data for table `WorkhiveProd`.`Users`
+-- Data for table `workhive`.`Users`
 -- -----------------------------------------------------
 START TRANSACTION;
-USE `WorkhiveProd`;
+USE `workhive`;
 
 -- Table Users
-INSERT INTO `WorkhiveProd`.`Users` (`id`, `first_name`, `last_name`, `photo`, `user_role`, `phone`, `email`, `password`,
+INSERT INTO `workhive`.`Users` (`id`, `first_name`, `last_name`, `photo`, `user_role`, `phone`, `email`, `password`,
                                 `status`, `created_at`, `updated_at`)
 VALUES (1, 'Marc', 'Galoyer', NULL, 'admin', '0690684020', 'mgaloyer@uneak.fr', 'password', 'active', DEFAULT, DEFAULT),
        (2, 'Drucila', 'Larochelle', NULL, 'member', NULL, 'drucila@email.com', 'password', 'active', DEFAULT, DEFAULT),
@@ -22,7 +22,7 @@ VALUES (1, 'Marc', 'Galoyer', NULL, 'admin', '0690684020', 'mgaloyer@uneak.fr', 
         DEFAULT);
 
 -- Table Rooms
-INSERT INTO `WorkhiveProd`.`Rooms` (`id`, `name`, `description`, `photo`, `capacity`, `width`, `length`, `status`,
+INSERT INTO `workhive`.`Rooms` (`id`, `name`, `description`, `photo`, `capacity`, `width`, `length`, `status`,
                                 `created_at`, `updated_at`)
 VALUES (1, 'Salle A', 'Salle de réunion avec écran', NULL, 10, 5.50, 6.50, 'active', DEFAULT, DEFAULT),
        (2, 'Salle B', 'Salle de conférence avec projecteur', NULL, 20, 8.00, 10.00, 'active', DEFAULT, DEFAULT),
@@ -31,7 +31,7 @@ VALUES (1, 'Salle A', 'Salle de réunion avec écran', NULL, 10, 5.50, 6.50, 'ac
        (5, 'Salle E', 'Salle pour événements', NULL, 50, 12.00, 15.00, 'inactive', DEFAULT, DEFAULT);
 
 -- Table Equipments
-INSERT INTO `WorkhiveProd`.`Equipments` (`id`, `name`, `description`, `photo`, `total_stock`, `created_at`, `updated_at`)
+INSERT INTO `workhive`.`Equipments` (`id`, `name`, `description`, `photo`, `total_stock`, `created_at`, `updated_at`)
 VALUES (1, 'Projecteur', 'Projecteur 1080p', NULL, 5, DEFAULT, DEFAULT),
        (2, 'Tableau Blanc', 'Tableau effaçable', NULL, 10, DEFAULT, DEFAULT),
        (3, 'Ordinateur Portable', 'Ordinateur portable pour présentations', NULL, 3, DEFAULT, DEFAULT),
@@ -39,7 +39,7 @@ VALUES (1, 'Projecteur', 'Projecteur 1080p', NULL, 5, DEFAULT, DEFAULT),
        (5, 'Microphone', 'Microphone sans fil', NULL, 7, DEFAULT, DEFAULT);
 
 -- Table Equipment_Role_Rate
-INSERT INTO `WorkhiveProd`.`Equipment_Role_Rate` (`id`, `equipment_id`, `user_role`, `hourly_rate`)
+INSERT INTO `workhive`.`Equipment_Role_Rate` (`id`, `equipment_id`, `user_role`, `hourly_rate`)
 VALUES (1, 1, 'member', 15.00),
        (2, 2, 'user', 5.00),
        (3, 3, 'admin', 10.00),
@@ -51,7 +51,7 @@ VALUES (1, 1, 'member', 15.00),
        (9, 5, 'admin', 9.00);
 
 -- Table Reservations
-INSERT INTO `WorkhiveProd`.`Reservations` (`id`, `user_id`, `room_id`, `start_at`, `end_at`, `status`, `created_at`,
+INSERT INTO `workhive`.`Reservations` (`id`, `user_id`, `room_id`, `start_at`, `end_at`, `status`, `created_at`,
                                        `updated_at`)
 VALUES (1, 1, 1, '2024-10-30 09:00:00', '2024-10-30 11:00:00', 'confirmed', DEFAULT, DEFAULT),
        (2, 2, 2, '2024-10-31 14:00:00', '2024-10-31 16:00:00', 'pending', DEFAULT, DEFAULT),
@@ -61,7 +61,7 @@ VALUES (1, 1, 1, '2024-10-30 09:00:00', '2024-10-30 11:00:00', 'confirmed', DEFA
        (6, 6, 5, '2024-11-04 16:00:00', '2024-11-04 18:00:00', 'cancelled', DEFAULT, DEFAULT);
 
 -- Table Room_Equipment
-INSERT INTO `WorkhiveProd`.`Room_Equipment` (`id`, `room_id`, `equipment_id`, `quantity`, `assigned_at`)
+INSERT INTO `workhive`.`Room_Equipment` (`id`, `room_id`, `equipment_id`, `quantity`, `assigned_at`)
 VALUES (1, 1, 1, 1, DEFAULT),
        (2, 2, 2, 2, DEFAULT),
        (3, 3, 3, 1, DEFAULT),
@@ -72,7 +72,7 @@ VALUES (1, 1, 1, 1, DEFAULT),
        (8, 4, 3, 1, DEFAULT);
 
 -- Table Room_Role_Rate
-INSERT INTO `WorkhiveProd`.`Room_Role_Rate` (`id`, `room_id`, `user_role`, `hourly_rate`)
+INSERT INTO `workhive`.`Room_Role_Rate` (`id`, `room_id`, `user_role`, `hourly_rate`)
 VALUES (1, 1, 'member', 50.00),
        (2, 2, 'user', 100.00),
        (3, 3, 'admin', 75.00),
@@ -82,7 +82,7 @@ VALUES (1, 1, 'member', 50.00),
        (7, 5, 'user', 200.00);
 
 -- Table Reservation_Equipment
-INSERT INTO `WorkhiveProd`.`Reservation_Equipment` (`id`, `reservation_id`, `equipment_id`, `quantity`, `created_at`,
+INSERT INTO `workhive`.`Reservation_Equipment` (`id`, `reservation_id`, `equipment_id`, `quantity`, `created_at`,
                                                 `updated_at`)
 VALUES (1, 1, 1, 1, DEFAULT, DEFAULT),
        (2, 2, 2, 1, DEFAULT, DEFAULT),

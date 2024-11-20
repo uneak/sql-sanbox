@@ -9,22 +9,22 @@ SET @OLD_SQL_MODE = @@SQL_MODE, SQL_MODE =
         'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
 
 -- -----------------------------------------------------
--- Schema WorkhiveProd
+-- Schema workhive
 -- -----------------------------------------------------
-DROP SCHEMA IF EXISTS `WorkhiveProd`;
+DROP SCHEMA IF EXISTS `workhive`;
 
 -- -----------------------------------------------------
--- Schema WorkhiveProd
+-- Schema workhive
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `WorkhiveProd` DEFAULT CHARACTER SET utf8;
-USE `WorkhiveProd`;
+CREATE SCHEMA IF NOT EXISTS `workhive` DEFAULT CHARACTER SET utf8;
+USE `workhive`;
 
 -- -----------------------------------------------------
--- Table `WorkhiveProd`.`Users`
+-- Table `workhive`.`Users`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `WorkhiveProd`.`Users`;
+DROP TABLE IF EXISTS `workhive`.`Users`;
 
-CREATE TABLE IF NOT EXISTS `WorkhiveProd`.`Users`
+CREATE TABLE IF NOT EXISTS `workhive`.`Users`
 (
     `id`         INT                              NULL     DEFAULT NULL AUTO_INCREMENT,
     `first_name` VARCHAR(50)                      NOT NULL,
@@ -43,11 +43,11 @@ CREATE TABLE IF NOT EXISTS `WorkhiveProd`.`Users`
 
 
 -- -----------------------------------------------------
--- Table `WorkhiveProd`.`Rooms`
+-- Table `workhive`.`Rooms`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `WorkhiveProd`.`Rooms`;
+DROP TABLE IF EXISTS `workhive`.`Rooms`;
 
-CREATE TABLE IF NOT EXISTS `WorkhiveProd`.`Rooms`
+CREATE TABLE IF NOT EXISTS `workhive`.`Rooms`
 (
     `id`          INT                         NULL     DEFAULT NULL AUTO_INCREMENT,
     `name`        VARCHAR(100)                NOT NULL,
@@ -64,11 +64,11 @@ CREATE TABLE IF NOT EXISTS `WorkhiveProd`.`Rooms`
 
 
 -- -----------------------------------------------------
--- Table `WorkhiveProd`.`Equipments`
+-- Table `workhive`.`Equipments`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `WorkhiveProd`.`Equipments`;
+DROP TABLE IF EXISTS `workhive`.`Equipments`;
 
-CREATE TABLE IF NOT EXISTS `WorkhiveProd`.`Equipments`
+CREATE TABLE IF NOT EXISTS `workhive`.`Equipments`
 (
     `id`          INT          NULL     DEFAULT NULL AUTO_INCREMENT,
     `name`        VARCHAR(100) NOT NULL,
@@ -82,11 +82,11 @@ CREATE TABLE IF NOT EXISTS `WorkhiveProd`.`Equipments`
 
 
 -- -----------------------------------------------------
--- Table `WorkhiveProd`.`Equipment_Role_Rate`
+-- Table `workhive`.`Equipment_Role_Rate`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `WorkhiveProd`.`Equipment_Role_Rate`;
+DROP TABLE IF EXISTS `workhive`.`Equipment_Role_Rate`;
 
-CREATE TABLE IF NOT EXISTS `WorkhiveProd`.`Equipment_Role_Rate`
+CREATE TABLE IF NOT EXISTS `workhive`.`Equipment_Role_Rate`
 (
     `id`           INT                              NULL     DEFAULT NULL AUTO_INCREMENT,
     `equipment_id` INT                              NOT NULL,
@@ -97,17 +97,17 @@ CREATE TABLE IF NOT EXISTS `WorkhiveProd`.`Equipment_Role_Rate`
     INDEX `fk_equipment_role_rate_equipment_id` (`equipment_id` ASC) VISIBLE,
     CONSTRAINT `fk_equipment_role_rate_equipment_id`
         FOREIGN KEY (`equipment_id`)
-            REFERENCES `WorkhiveProd`.`Equipments` (`id`)
+            REFERENCES `workhive`.`Equipments` (`id`)
             ON DELETE CASCADE
 );
 
 
 -- -----------------------------------------------------
--- Table `WorkhiveProd`.`Reservations`
+-- Table `workhive`.`Reservations`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `WorkhiveProd`.`Reservations`;
+DROP TABLE IF EXISTS `workhive`.`Reservations`;
 
-CREATE TABLE IF NOT EXISTS `WorkhiveProd`.`Reservations`
+CREATE TABLE IF NOT EXISTS `workhive`.`Reservations`
 (
     `id`         INT                                        NULL     DEFAULT NULL AUTO_INCREMENT,
     `user_id`    INT                                        NOT NULL,
@@ -122,21 +122,21 @@ CREATE TABLE IF NOT EXISTS `WorkhiveProd`.`Reservations`
     INDEX `fk_reservations_room_id` (`room_id` ASC) VISIBLE,
     CONSTRAINT `fk_reservations_user_id`
         FOREIGN KEY (`user_id`)
-            REFERENCES `WorkhiveProd`.`Users` (`id`)
+            REFERENCES `workhive`.`Users` (`id`)
             ON DELETE CASCADE,
     CONSTRAINT `fk_reservations_room_id`
         FOREIGN KEY (`room_id`)
-            REFERENCES `WorkhiveProd`.`Rooms` (`id`)
+            REFERENCES `workhive`.`Rooms` (`id`)
             ON DELETE CASCADE
 );
 
 
 -- -----------------------------------------------------
--- Table `WorkhiveProd`.`Room_Equipment`
+-- Table `workhive`.`Room_Equipment`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `WorkhiveProd`.`Room_Equipment`;
+DROP TABLE IF EXISTS `workhive`.`Room_Equipment`;
 
-CREATE TABLE IF NOT EXISTS `WorkhiveProd`.`Room_Equipment`
+CREATE TABLE IF NOT EXISTS `workhive`.`Room_Equipment`
 (
     `id`           INT       NULL     DEFAULT NULL AUTO_INCREMENT,
     `room_id`      INT       NOT NULL,
@@ -148,21 +148,21 @@ CREATE TABLE IF NOT EXISTS `WorkhiveProd`.`Room_Equipment`
     INDEX `fk_room_equipment_equipment_id` (`equipment_id` ASC) VISIBLE,
     CONSTRAINT `fk_room_equipment_room_id`
         FOREIGN KEY (`room_id`)
-            REFERENCES `WorkhiveProd`.`Rooms` (`id`)
+            REFERENCES `workhive`.`Rooms` (`id`)
             ON DELETE CASCADE,
     CONSTRAINT `fk_room_equipment_equipment_id`
         FOREIGN KEY (`equipment_id`)
-            REFERENCES `WorkhiveProd`.`Equipments` (`id`)
+            REFERENCES `workhive`.`Equipments` (`id`)
             ON DELETE CASCADE
 );
 
 
 -- -----------------------------------------------------
--- Table `WorkhiveProd`.`Room_Role_Rate`
+-- Table `workhive`.`Room_Role_Rate`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `WorkhiveProd`.`Room_Role_Rate`;
+DROP TABLE IF EXISTS `workhive`.`Room_Role_Rate`;
 
-CREATE TABLE IF NOT EXISTS `WorkhiveProd`.`Room_Role_Rate`
+CREATE TABLE IF NOT EXISTS `workhive`.`Room_Role_Rate`
 (
     `id`          INT                              NULL     DEFAULT NULL AUTO_INCREMENT,
     `room_id`     INT                              NOT NULL,
@@ -173,17 +173,17 @@ CREATE TABLE IF NOT EXISTS `WorkhiveProd`.`Room_Role_Rate`
     INDEX `fk_room_role_rate_room_id` (`room_id` ASC) VISIBLE,
     CONSTRAINT `fk_room_role_rate_room_id`
         FOREIGN KEY (`room_id`)
-            REFERENCES `WorkhiveProd`.`Rooms` (`id`)
+            REFERENCES `workhive`.`Rooms` (`id`)
             ON DELETE CASCADE
 );
 
 
 -- -----------------------------------------------------
--- Table `WorkhiveProd`.`Reservation_Equipment`
+-- Table `workhive`.`Reservation_Equipment`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `WorkhiveProd`.`Reservation_Equipment`;
+DROP TABLE IF EXISTS `workhive`.`Reservation_Equipment`;
 
-CREATE TABLE IF NOT EXISTS `WorkhiveProd`.`Reservation_Equipment`
+CREATE TABLE IF NOT EXISTS `workhive`.`Reservation_Equipment`
 (
     `id`             INT       NULL     DEFAULT NULL AUTO_INCREMENT,
     `reservation_id` INT       NOT NULL,
@@ -196,11 +196,11 @@ CREATE TABLE IF NOT EXISTS `WorkhiveProd`.`Reservation_Equipment`
     INDEX `fk_reservation_equipment_equipment_id` (`equipment_id` ASC) VISIBLE,
     CONSTRAINT `fk_reservation_equipment_reservation_id`
         FOREIGN KEY (`reservation_id`)
-            REFERENCES `WorkhiveProd`.`Reservations` (`id`)
+            REFERENCES `workhive`.`Reservations` (`id`)
             ON DELETE CASCADE,
     CONSTRAINT `fk_reservation_equipment_equipment_id`
         FOREIGN KEY (`equipment_id`)
-            REFERENCES `WorkhiveProd`.`Equipments` (`id`)
+            REFERENCES `workhive`.`Equipments` (`id`)
             ON DELETE CASCADE
 );
 
