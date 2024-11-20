@@ -1,1 +1,0 @@
--- Notification de changement pour une réservation (à gérer côté application)
