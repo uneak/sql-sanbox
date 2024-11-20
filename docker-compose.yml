@@ -17,7 +17,7 @@ services:
     image: mariadb:11.4.3
     environment:
       MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: workhive
+      MYSQL_DATABASE: WorkhiveProd
       MYSQL_USER: app
       MYSQL_PASSWORD: app
     ports:
