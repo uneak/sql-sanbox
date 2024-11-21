@@ -28,13 +28,7 @@
     $currentUser = $_GET["user"];
 	// $user = $userManager->findById($currentUser);
 
-	echo $twig->render('form_bitcoin.html.twig', [
-		'user'=>$user,
-    ]);
-
-
-
-
+	
 
     $isValidated = (isset($_POST["address"]) && isset($_POST["label"]));
 
@@ -48,4 +42,10 @@
             ],
         ]);
     }
+
+echo $twig->render('form_bitcoin.html.twig', [
+		'user'=>$user,
+        'isValidated' => $isValidated,
+    ]);
+
 ?>
