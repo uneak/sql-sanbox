@@ -29,8 +29,4 @@
             );
         }
 
-        public function getName(): string
-        {
-            return "Bank Transfer";
-        }
     }

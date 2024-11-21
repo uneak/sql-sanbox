@@ -28,9 +28,4 @@
                 $options->getEmail()
             );
         }
-
-        public function getName(): string
-        {
-            return "PayPal";
-        }
     }

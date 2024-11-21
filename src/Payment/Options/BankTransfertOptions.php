@@ -22,11 +22,6 @@
             return $this->bic;
         }
 
-        public function getName(): string
-        {
-            return "Virement bancaire";
-        }
-
         public function _toArray(): array
         {
             return [

@@ -23,11 +23,6 @@
             return $this->password;
         }
 
-        public function getName(): string
-        {
-            return "PayPal";
-        }
-
         public function _toArray(): array
         {
             return [

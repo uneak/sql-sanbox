@@ -15,11 +15,6 @@
             return $this->address;
         }
 
-        public function getName(): string
-        {
-            return "Bitcoin";
-        }
-
         public function _toArray(): array
         {
             return [
