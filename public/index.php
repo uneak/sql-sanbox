@@ -4,10 +4,12 @@
     use App\Controllers\LoginController;
     use Twig\Environment;
     use Twig\Loader\FilesystemLoader;
+    use App\Controllers\ProfileController;
 
     require __DIR__ . '/../vendor/autoload.php';
 
-    $loader = new FilesystemLoader(dirname(__DIR__, 2) . '/src/Views');
+    // $loader = new FilesystemLoader(dirname(__DIR__, 2) . '/src/Views');
+    $loader = new FilesystemLoader('../src/Views');
     $twig = new Environment($loader);
 
     $parsedUrl = parse_url($_SERVER['REQUEST_URI']);
@@ -15,6 +17,7 @@
     $content = match ($parsedUrl['path']) {
         '/' => (new HomeController($twig))->index(),
         '/login' => (new LoginController($twig))->index(),
+        '/profile' => (new ProfileController($twig))->index(),
         default => '404.php',
     };
 
