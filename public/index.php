@@ -6,6 +6,7 @@
     use Twig\Environment;
     use Twig\Loader\FilesystemLoader;
     use App\Controllers\ProfileController;
+    use App\Controllers\FormBankTransfert;
 
     require __DIR__ . '/../vendor/autoload.php';
 
@@ -20,6 +21,7 @@
         '/login' => (new LoginController($twig))->index(),
         '/profile' => (new ProfileController($twig))->index(),
         '/form-bitcoin' => (new FormBitcoinController($twig))->index(),
+        '/bank' => (new FormBankTransfert($twig))->transfert(),
         default => '404.php',
     };
 
