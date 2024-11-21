@@ -11,11 +11,13 @@
     $userManager = new UserManager();
     $roomManager = new RoomManager();
     $paymentMethodManager = new PaymentMethodManager();
+    
     $loader = new FilesystemLoader(dirname(__DIR__, 2) . '/templates');
     $twig = new Environment($loader);
 
     if (!isset($_GET["user"])) {
-        header("Location: index.php");
+        header("Location: /login");
+        // header("Location: index.php");
         exit;
     }
 
@@ -41,11 +43,11 @@
 
         $payment->pay($price, $paymentMethod->getData());
     }
-
-	echo $twig->render('product.html.twig' , [
+echo $twig->render('product.html.twig' , [
         'user' => $user,
         'userMethodList' => $paymentMethodManager->findAll(10, 0, ['user' => $user->getId()]),
 		'room' => $room,
 		'price' => $productPrice
     ]);
+	
 
