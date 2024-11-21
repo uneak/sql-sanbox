@@ -1,6 +1,6 @@
 <?php
 
-    namespace App\Reservation;
+    namespace App\Models;
 
     use DateTime;
 
