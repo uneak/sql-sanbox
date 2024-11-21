@@ -30,21 +30,30 @@ class ProfileController {
         $userMethodList = $paymentMethodManager->findAll(10, 0, ['user' => $user->getId()]);
         $methodList = $paymentMethodFactory->getPaymentMethods();
 
-        var_dump($_POST);
+        
 
         if (isset($_POST["user"]) && isset($_POST["method"])) {
-            echo "TEST<br>";
-            // switch ($_POST["method"]) {
-            //     case 'bitcoin':
-            //         // echo "c"
-            //         break;
-                
-            //     default:
-            //         # code...
-            //         break;
-            // }
+            $controller = "";
+            switch ($_POST["method"]) {
+                case 'bank_transfer':
 
-            header("Location: form_".$_POST["method"].".php?user={$_POST["user"]}");
+                    break;
+                case 'paypal':
+
+                    break;
+                case 'bitcoin':
+                    $controller = "form-bitcoin";
+                    break; 
+                case 'credit_card':
+                    
+                    break;
+                default:
+                    # code...
+                    break;
+            }
+
+            // header("Location: form_".$_POST["method"].".php?user={$_POST["user"]}");
+            header("Location: ".$controller."?user={$_POST["user"]}");
             exit;
         }
 

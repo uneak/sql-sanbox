@@ -2,6 +2,7 @@
 
     use App\Controllers\HomeController;
     use App\Controllers\LoginController;
+    use App\Controllers\FormBitcoinController;
     use Twig\Environment;
     use Twig\Loader\FilesystemLoader;
     use App\Controllers\ProfileController;
@@ -18,6 +19,7 @@
         '/' => (new HomeController($twig))->index(),
         '/login' => (new LoginController($twig))->index(),
         '/profile' => (new ProfileController($twig))->index(),
+        '/form-bitcoin' => (new FormBitcoinController($twig))->index(),
         default => '404.php',
     };
 
