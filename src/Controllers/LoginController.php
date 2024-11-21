@@ -8,18 +8,21 @@
 
     class LoginController
     {
+
+        private Environment $twig;
+
+        public function __construct(Environment $twig) {
+            $this->twig = $twig;
+        }
+
         public function index() : string
         {
-            $loader = new FilesystemLoader(dirname(__DIR__, 2) . '/src/Views');
-            $twig = new Environment($loader);
-
-
             if (isset($_POST["user"])) {
                 header("Location: /?user={$_POST["user"]}");
                 exit;
             }
 
             $userManager = new UserManager();
-            return $twig->render('login.html.twig', ['users' => $userManager->findAll()]);
+            return $this->twig->render('login.html.twig', ['users' => $userManager->findAll()]);
         }
     }
