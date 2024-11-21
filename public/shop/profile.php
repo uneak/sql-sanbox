@@ -1,6 +1,8 @@
 <?php
     require __DIR__ . '/../../vendor/autoload.php';
 
+  
+
     use App\Models\PaymentMethodManager;
     use App\Models\UserManager;
     use App\Services\Payment\PaymentMethodFactory;
@@ -8,8 +10,8 @@
     use Twig\Loader\FilesystemLoader;
 
 
-    $loader = new FilesystemLoader(dirname(__DIR__, 2) . '/templates');
-    $twig = new Environment($loader);
+    // $loader = new FilesystemLoader(dirname(__DIR__, 2) . '/templates');
+    // $twig = new Environment($loader);
 
 	
 

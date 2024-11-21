@@ -1,5 +1,6 @@
 <?php
 
+use App\Controllers\ProfileController;
     use App\Controllers\HomeController;
     use App\Controllers\LoginController;
     use App\Controllers\FormBitcoinController;
@@ -9,7 +10,7 @@
 
     require __DIR__ . '/../vendor/autoload.php';
 
-    // $loader = new FilesystemLoader(dirname(__DIR__, 2) . '/src/Views');
+
     $loader = new FilesystemLoader('../src/Views');
     $twig = new Environment($loader);
 
