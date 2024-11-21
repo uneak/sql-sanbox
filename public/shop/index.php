@@ -1,7 +1,7 @@
 <?php
     require __DIR__ . '/../../vendor/autoload.php';
 
-    use App\Reservation\UserManager;
+    use App\Models\UserManager;
     use Twig\Environment;
     use Twig\Loader\FilesystemLoader;
 

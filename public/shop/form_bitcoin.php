@@ -1,11 +1,11 @@
 <?php
     require __DIR__ . '/../../vendor/autoload.php';
 
-    use App\Payment\PaymentMethodFactory;
-    use App\Payment\PaymentMethodManager;
-    use App\Reservation\UserManager;
-	use Twig\Environment;
-	use Twig\Loader\FilesystemLoader;
+    use App\Models\PaymentMethodManager;
+    use App\Models\UserManager;
+    use App\Services\Payment\PaymentMethodFactory;
+    use Twig\Environment;
+    use Twig\Loader\FilesystemLoader;
 
     $userManager = new UserManager();
     $paymentMethodFactory = new PaymentMethodFactory();

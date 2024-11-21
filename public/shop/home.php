@@ -1,8 +1,8 @@
 <?php
     require __DIR__ . '/../../vendor/autoload.php';
 
-    use App\Reservation\RoomManager;
-    use App\Reservation\UserManager;
+    use App\Models\RoomManager;
+    use App\Models\UserManager;
     use Twig\Environment;
     use Twig\Loader\FilesystemLoader;
 
@@ -19,7 +19,7 @@
     // Vérification que le paramètre 'user' est bien défini dans l'URL
 	if (!isset($_GET["user"])) {
         // Redirection vers la page d'accueil si l'utilisateur n'est pas défini
-        header("Location: index.php");
+        header("Location: /login");
         exit;
 	}
 
