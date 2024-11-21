@@ -44,7 +44,7 @@
 	{% if isValidated %}
 			<div class="alert alert-success" role="alert">
 				Votre carte a bien été enregistrée<br/>
-				<a href="/shop/profile.php?user=<?php echo $user->getId(); ?>" class="btn btn-primary">Retour</a>
+				<a href="/shop/profile.php?user={{ user.getId() }}" class="btn btn-primary">Retour</a>
 			</div>
         {% else %}
 			<form action="" method="POST">
