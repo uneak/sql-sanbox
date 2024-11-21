@@ -32,5 +32,10 @@
         exit;
     }
 
-	echo $twig->render('profile.html.twig', ['user' => $user]);
+	echo $twig->render('profile.html.twig', [
+        'user' => $user,
+        'userMethodList' => $userMethodList,
+        'methodList' => $methodList
+
+]);
 ?>

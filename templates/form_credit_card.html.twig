@@ -41,46 +41,36 @@
 <main>
 	<div class="container mt-4">
 
-		<h2>Ajouter un moyen de paiement</h2>
-
-		<form action="/shop/profile.php?user={{ user.getId() }}" method="post">
-			<select name="method" class="form-select form-select-lg mb-3" aria-label="Large select example">
-				<option selected>Method de payment</option>
-				
-				                {# <?php
-                    foreach ($methodList as $key => $classMethod) {
-                        echo "<option value=\"{$key}\">{$key}</li>";
-                    }
-                ?> #}
-
-                    {% for key,value in methodList %} 
-                       <option value="{{ key }}">{{ key }}</option>
-					{% endfor %}
-                    
-                
-			</select>
-			<div class="d-flex gap-3 justify-content-center lead fw-normal">
-				<input name="user" type="hidden" value={{ user.getId() }}>
-				<button type="submit" class="btn btn-primary">Create</button>
+        {% if isValidated %}
+        
+			<div class="alert alert-success" role="alert">
+				Votre carte a bien été enregistrée<br/>
+				<a href="/shop/profile.php?user={{ user.getId() }}" class="btn btn-primary">Retour</a>
 			</div>
-		</form>
+            
+			  {% else %}
+			   
+			<form action="" method="POST">
+				<label for="number">Nom :</label>
+				<input type="text" id="label" name="label" placeholder="Compte crédit agricole" required>
+				<br><br>
 
+				<label for="number">Numéro de la carte :</label>
+				<input type="text" id="number" name="number" placeholder="1234 5678 9012 3456" required>
+				<br><br>
 
-		<h2>Mes moyens de paiement</h2>
+				<label for="expiration">Date d'expiration :</label>
+				<input type="text" id="expiration" name="expiration" placeholder="MM/AA" required>
+				<br><br>
 
-		<ul class="list-group">
-            {# <?php #}
-				{% for method in userMethodList %}
-                {# foreach ($userMethodList as $method) { #}
-                    <li class="list-group-item">
-					{{ method.getType }} {{ method.getLabel }}
-					</li>
-				{% endfor %}
-                {# } #}
-            {# ?> #}
-		</ul>
+				<label for="cvv">CVV :</label>
+				<input type="text" id="cvv" name="cvv" placeholder="123" required>
+				<br><br>
 
-
+				<button type="submit" class="btn btn-primary">Envoyer</button>
+			</form>
+       
+        {% endif %}
 	</div>
 </main>
 
