@@ -1,38 +1,18 @@
 <?php
 
+    use App\Controllers\HomeController;
+    use App\Controllers\LoginController;
+
     require __DIR__ . '/../vendor/autoload.php';
 
 
-    use App\Test\Montre;
-    use App\Test\Truc;
-    use App\Test\DeletableInterface;
+    $parsedUrl = parse_url($_SERVER['REQUEST_URI']);
 
+    $content = match ($parsedUrl['path']) {
+        '/' => (new HomeController())->index(),
+        '/login' => (new LoginController())->index(),
+        default => '404.php',
+    };
 
-    $montre = new Montre();
-    $truc = new Truc(1,2,3,4,5);
-
-
-    /**
-     * @throws \Exception
-     */
-    function delete(DeletableInterface $deletable) {
-        $deletable->delete();
-        echo "l'objet a bien été effacé <br/>";
-    }
-
-
-    delete($montre);
-    delete($truc);
-
-    echo $montre->heure;
-    echo "<br/>";
-    echo $truc->premierChiffre;
-
-
-
-//    echo "Instance of Montre ? :" . ($truc instanceof \App\Test\DeletableInterface ? "oui" : "non");
-
-//    var_dump($truc);
-
-
+    echo $content;
 
