@@ -10,7 +10,7 @@
     use Twig\Environment;
     use Twig\Loader\FilesystemLoader;
 
-    $loader = new FilesystemLoader(['../src/Views']);
+    $loader = new FilesystemLoader('../src/Views');
     $twig = new Environment($loader);
 
     $url = $_GET['url'] ?? '';
