@@ -1,6 +1,6 @@
 <?php
 
-use App\Controllers\ProfileController;
+
     use App\Controllers\HomeController;
     use App\Controllers\LoginController;
     use App\Controllers\FormBitcoinController;
