@@ -27,11 +27,35 @@ class MhbGameController{
             exit;
         }
 
+        $try = 5;
+        $winValue = random_int(1,100);
+
+        $message = "";
+
+        if (isset($_POST["value"]) && isset($_POST["winValue"]) && isset($_POST["try"])) {
+            $winValue = $_POST["winValue"];
+
+            if ($_POST["value"] == $winValue) {
+                $message = "Vous avez trouvé le nombre mystère !, c'était bien $winValue";
+            } elseif ($_POST["value"] < $winValue) {
+                $message = "Le nombre mystère est plus grand";
+            } else {
+                $message = "Le nombre mystère est plus petit";
+            }
+
+            if ($_POST["value"] !== $winValue) {
+                $try = $_POST["try"] - 1;
+                $message .= " - Il vous reste $try essais";
+            }
+        }
+
         $user = $userManager->findById($_GET["user"]); // Recherche de l'utilisateur en base de données
 
         return $this->twig->render('mhbGame.html.twig', [
             'user' => $user,                   // L'utilisateur actuel
-            
+            'message' => $message,
+            'winValue' => $winValue,
+            'try' => $try
         ]);
     }
 
