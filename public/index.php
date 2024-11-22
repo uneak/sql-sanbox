@@ -1,6 +1,6 @@
 <?php
 
-
+    use App\Controllers\MhbGameController;
     use App\Controllers\HomeController;
     use App\Controllers\LoginController;
     use App\Controllers\FormBitcoinController;
@@ -23,6 +23,7 @@
         '/profile' => (new ProfileController($twig))->index(),
         '/form-bitcoin' => (new FormBitcoinController($twig))->index(),
         '/bank' => (new FormBankTransfert($twig))->transfert(),
+        '/mhbGame' => (new MhbGameController($twig))->index(),
         default => '404.php',
     };
 
