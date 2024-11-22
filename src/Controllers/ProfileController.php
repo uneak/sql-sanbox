@@ -16,9 +16,10 @@
             $this->twig = $twig;
         }
 
-        public function index() : string
+        public function index(string $userId) : string
         {
-            if (!isset($_GET["user"])) {
+
+            if (!isset($userId)) {
                 header("Location: /login");
                 exit;
             }
@@ -40,7 +41,7 @@
             $paymentMethodManager = new PaymentMethodManager();
             $paymentFactory = new PaymentFactory();
 
-            $user = $userManager->findById($_GET["user"]);
+            $user = $userManager->findById($userId);
             $userPaymentMethodList = $paymentMethodManager->findAll(10, 0, ['user' => $user->getId()]);
             $paymentTypes = $paymentFactory->getPaymentTypes();
 

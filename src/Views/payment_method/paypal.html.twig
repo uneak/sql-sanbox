@@ -22,7 +22,7 @@
 						<a class="nav-link active" aria-current="page" href="/?user={{ user.getId() }}">Home</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="/profile?user={{ user.getId() }}">Profile</a>
+						<a class="nav-link" href="/profile/{{ user.getId() }}">Profile</a>
 					</li>
 					<li class="nav-item">
 						<a class="nav-link" href="/login">Login</a>
@@ -43,7 +43,7 @@
 		{% if isValidated %}
 		<div class="alert alert-success" role="alert">
 			Votre carte a bien été enregistrée<br/>
-			<a href="/profile?user={{ user.getId() }}" class="btn btn-primary">Retour</a>
+			<a href="/profile/{{ user.getId() }}" class="btn btn-primary">Retour</a>
 		</div>
 		{% else %}
 			<form action="" method="POST">

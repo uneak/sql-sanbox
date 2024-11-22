@@ -4,6 +4,7 @@
 
     use App\Models\RoomManager;
     use App\Models\UserManager;
+    use Symfony\Component\HttpFoundation\Request;
 
     class HomeController
     {
@@ -17,7 +18,10 @@
         public function index() : string
         {
 
-            if (!isset($_GET["user"])) {
+            $request = Request::createFromGlobals();
+            $userID = $request->query->get('user', null);
+
+            if ($userID === null) {
                 header("Location: /login");
                 exit;
             }
