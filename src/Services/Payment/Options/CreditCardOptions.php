@@ -29,12 +29,6 @@
             return $this->cvv;
         }
 
-        public function getName(): string
-        {
-            return "Carte de crédit";
-        }
-
-
         public function _toArray(): array
         {
             return [

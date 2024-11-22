@@ -19,14 +19,13 @@
 			<div class="collapse navbar-collapse" id="navbarNav">
 				<ul class="navbar-nav">
 					<li class="nav-item">
-						<a class="nav-link active" aria-current="page"
-						   href="\shop\home.php?user=<?php echo $user->getId(); ?>">Home</a>
+						<a class="nav-link active" aria-current="page" href="/?user={{ user.getId() }}">Home</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="\shop\profile.php?user=<?php echo $user->getId(); ?>">Profile</a>
+						<a class="nav-link" href="/profile?user={{ user.getId() }}">Profile</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="\shop">Login</a>
+						<a class="nav-link" href="/login">Login</a>
 					</li>
 				</ul>
 			</div>
@@ -34,20 +33,19 @@
 	</nav>
 
 	<div class="container">
-		<h1>Bienvenue {{ user.getFirstName()}} {{user.getLastName()}}</h1>
+		<h1>Bienvenue {{ user.getFirstName() }} {{ user.getLastName() }}</h1>
 		<p>Une simple page HTML pour commencer</p>
 	</div>
 </header>
 <main>
 	<div class="container mt-4">
 
-        {% if isValidated %} 
-			<div class="alert alert-success" role="alert">
-				Votre carte a bien été enregistrée<br/>
-				<a href="/shop/profile.php?user={{ user.getId() }}" class="btn btn-primary">Retour</a>
-			</div>
-        {% else %}
-
+		{% if isValidated %}
+		<div class="alert alert-success" role="alert">
+			Votre carte a bien été enregistrée<br/>
+			<a href="/profile?user={{ user.getId() }}" class="btn btn-primary">Retour</a>
+		</div>
+		{% else %}
 			<form action="" method="POST">
 				<label for="number">Nom :</label>
 				<input type="text" id="label" name="label" placeholder="Compte binance" required>
@@ -63,8 +61,8 @@
 
 				<button type="submit" class="btn btn-primary">Envoyer</button>
 			</form>
+		{% endif %}
 
-        {% endif %}
 	</div>
 </main>
 

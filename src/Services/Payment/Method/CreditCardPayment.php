@@ -33,8 +33,4 @@
             );
         }
 
-        public function getName(): string
-        {
-            return "Credit card";
-        }
     }

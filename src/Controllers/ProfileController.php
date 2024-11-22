@@ -1,70 +1,67 @@
 <?php
 
-namespace App\Controllers;
 
-use App\Models\PaymentMethodManager;
-use App\Models\UserManager;
-use App\Services\Payment\PaymentMethodFactory;
-use Twig\Environment;
+    namespace App\Controllers;
 
-class ProfileController {
+    use App\Models\PaymentMethodManager;
+    use App\Models\UserManager;
+    use App\Services\Payment\PaymentFactory;
 
-    private Environment $twig;
+    class ProfileController
+    {
+        private $twig;
 
-    public function __construct(Environment $twig) {
-        $this->twig = $twig;
-    }
-
-    public function index() : string
-    { 
-
-        $userManager = new UserManager();
-        $paymentMethodManager = new PaymentMethodManager();
-        $paymentMethodFactory = new PaymentMethodFactory();
-
-        if (!isset($_GET["user"])) {
-            header("Location: index.php");
-            exit;
+        public function __construct($twig)
+        {
+            $this->twig = $twig;
         }
 
-        $user = $userManager->findById($_GET["user"]);
-        $userMethodList = $paymentMethodManager->findAll(10, 0, ['user' => $user->getId()]);
-        $methodList = $paymentMethodFactory->getPaymentMethods();
-
-        
-
-        if (isset($_POST["user"]) && isset($_POST["method"])) {
-            $controller = "";
-            switch ($_POST["method"]) {
-                case 'bank_transfer':
-
-                    break;
-                case 'paypal':
-
-                    break;
-                case 'bitcoin':
-                    $controller = "form-bitcoin";
-                    break; 
-                case 'credit_card':
-                    
-                    break;
-                default:
-                    # code...
-                    break;
+        public function index() : string
+        {
+            if (!isset($_GET["user"])) {
+                header("Location: /login");
+                exit;
             }
 
-            // header("Location: form_".$_POST["method"].".php?user={$_POST["user"]}");
-            header("Location: ".$controller."?user={$_POST["user"]}");
-            exit;
+            if (isset($_POST["user"]) && isset($_POST["method"])) {
+                $url = match ($_POST["method"]) {
+                    'credit_card' => "/profile/credit-card/create",
+                    'bitcoin' => "/profile/bitcoin/create",
+                    'bank_transfer' => "/profile/bank-transfer/create",
+                    'paypal' => "/profile/paypal/create",
+                    default => '',
+                };
+
+                header("Location: {$url}?user={$_POST["user"]}");
+                exit;
+            }
+
+            $userManager = new UserManager();
+            $paymentMethodManager = new PaymentMethodManager();
+            $paymentFactory = new PaymentFactory();
+
+            $user = $userManager->findById($_GET["user"]);
+            $userPaymentMethodList = $paymentMethodManager->findAll(10, 0, ['user' => $user->getId()]);
+            $paymentTypes = $paymentFactory->getPaymentTypes();
+
+            $methodList = [];
+            foreach ($paymentTypes as $paymentType) {
+                $methodList[$paymentType->getId()] = $paymentType->getName();
+            }
+
+            $userMethodList = [];
+            foreach ($userPaymentMethodList as $userMethod) {
+                $userMethodList[] = [
+                    'type' => $paymentFactory->getPaymentType($userMethod->getType())->getName(),
+                    'name' => $userMethod->getLabel(),
+                ];
+            }
+
+            return $this->twig->render('profile.html.twig', [
+                'user' => $user,
+                'methodList' => $methodList,
+                'userMethodList' => $userMethodList,
+            ]);
         }
 
-        return $this->twig->render('profile.html.twig', [
-            'user' => $user,
-            'userMethodList' => $userMethodList,
-            'methodList' => $methodList
-
-        ]);
-
     }
-
-}

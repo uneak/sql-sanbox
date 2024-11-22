@@ -3,26 +3,25 @@
     namespace App\Controllers;
 
     use App\Models\UserManager;
-    use Twig\Environment;
-    use Twig\Loader\FilesystemLoader;
 
     class LoginController
     {
+        private $twig;
 
-        private Environment $twig;
-
-        public function __construct(Environment $twig) {
+        public function __construct($twig)
+        {
             $this->twig = $twig;
         }
 
         public function index() : string
         {
+            $users = (new UserManager())->findAll();
+
             if (isset($_POST["user"])) {
                 header("Location: /?user={$_POST["user"]}");
                 exit;
             }
 
-            $userManager = new UserManager();
-            return $this->twig->render('login.html.twig', ['users' => $userManager->findAll()]);
+            return $this->twig->render('login.html.twig', ['users' => $users]);
         }
     }

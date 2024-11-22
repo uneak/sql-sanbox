@@ -1,62 +1,71 @@
 <?php
 
-namespace App\Controllers;
-use App\Models\RoomManager;
-use App\Models\UserManager;
-use App\Services\Payment\PaymentMethodFactory;
-use App\Models\PaymentMethodManager;
-use Twig\Environment;
-use Twig\Loader\FilesystemLoader;
+    namespace App\Controllers;
 
+    use App\Models\PaymentMethodManager;
+    use App\Models\RoomManager;
+    use App\Models\UserManager;
+    use App\Services\Payment\PaymentFactory;
 
-class ProductController 
-{
-
-    private Environment $twig;
-
-    public function __construct(Environment $twig){
-        $this->twig= $twig;
-    }
-
-    public function index() : string 
+    class ProductController
     {
-        $userManager = new UserManager();
-        $roomManager = new RoomManager();
-        $paymentMethodManager = new PaymentMethodManager();
+        private $twig;
 
-        if (!isset($_GET["product"])) {
-            header("Location: /login");
-            exit;
-        }
-        
-        $user = $userManager->findById($_GET["user"]);
-        $room = $roomManager->findById($_GET["product"]);
-
-        $productPrice = $roomManager->getPriceByRole($room->getId(), $user->getUserRole());
-
-        $paymentMethodFactory = new PaymentMethodFactory();
-    
-    
-        if (isset($_POST["user"]) && isset($_POST["product"]) && isset($_POST["method"])) {
-            $paymentMethod = $paymentMethodManager->findById($_POST["method"]);
-            $payment = $paymentMethodFactory->getPaymentMethod($paymentMethod->getType());
-    
-            $postUser = $userManager->findById($_POST["user"]);;
-            $price = $roomManager->getPriceByRole($_POST["product"], $postUser->getUserRole());
-    
-            $payment->pay($price, $paymentMethod->getData());
+        public function __construct($twig)
+        {
+            $this->twig = $twig;
         }
 
-    return $this->twig->render('product.html.twig' , [
-    'user' => $user,
-    'userMethodList' => $paymentMethodManager->findAll(10, 0, ['user' => $user->getId()]),
-    'room' => $room,
-    'price' => $productPrice,
-]);      
+        public function index() : string
+        {
+
+            if (!isset($_GET["user"])) {
+                header("Location: /login");
+                exit;
+            }
+
+            if (!isset($_GET["product"])) {
+                header("Location: /?user={$_GET["user"]}");
+                exit;
+            }
+
+            $userManager = new UserManager();
+            $user = $userManager->findById($_GET["user"]);
+
+            $roomManager = new RoomManager();
+            $room = $roomManager->findById($_GET["product"]);
+            $roomPrice = $roomManager->getPriceByRole($room->getId(), $user->getUserRole());
+
+            $paymentMethodManager = new PaymentMethodManager();
+            $userPaymentMethodList = $paymentMethodManager->findAll(10, 0, ['user' => $user->getId()]);
+
+            $paymentFactory = new PaymentFactory();
+
+            $userMethodList = [];
+            foreach ($userPaymentMethodList as $paymentMethod) {
+                $userMethodList[] = [
+                    'type' => $paymentFactory->getPaymentType($paymentMethod->getType())->getName(),
+                    'paymentMethod' => $paymentMethod,
+                ];
+            }
 
 
-}
+            if (isset($_POST["user"]) && isset($_POST["product"]) && isset($_POST["method"])) {
+
+                $postUser = $userManager->findById($_POST["user"]);;
+                $price = $roomManager->getPriceByRole($_POST["product"], $postUser->getUserRole());
+
+                $paymentMethod = $paymentMethodManager->findById($_POST["method"]);
+                $paymentMethodManager->pay($paymentMethod, $price);
+            }
 
 
+            return $this->twig->render('product.html.twig', [
+                'user' => $user,
+                'room' => $room,
+                'userMethodList' => $userMethodList,
+                'price' => $roomPrice,
+            ]);
+        }
 
-}
+    }

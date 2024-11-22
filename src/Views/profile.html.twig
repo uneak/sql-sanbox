@@ -19,14 +19,13 @@
 			<div class="collapse navbar-collapse" id="navbarNav">
 				<ul class="navbar-nav">
 					<li class="nav-item">
-						<a class="nav-link active" aria-current="page"
-						   href="\?user={{ user.getId() }}">Home</a>
+						<a class="nav-link active" aria-current="page" href="/?user={{ user.getId() }}">Home</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="\profile?user={{ user.getId() }}">Profile</a>
+						<a class="nav-link" href="/profile?user={{ user.getId() }}">Profile</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="\login">Login</a>
+						<a class="nav-link" href="/login">Login</a>
 					</li>
 				</ul>
 			</div>
@@ -42,38 +41,24 @@
 	<div class="container mt-4">
 
 		<h2>Ajouter un moyen de paiement</h2>
-
 		<form action="/profile?user={{ user.getId() }}" method="post">
 			<select name="method" class="form-select form-select-lg mb-3" aria-label="Large select example">
 				<option selected>Method de payment</option>
-				
-				               
-
-                    {% for key,value in methodList %} 
-                       <option value="{{ key }}">{{ key }}</option>
-					{% endfor %}
-                    
-                
+				{% for type, methodName in methodList %}
+					<option value="{{ type }}">{{ methodName }}</option>
+				{% endfor %}
 			</select>
 			<div class="d-flex gap-3 justify-content-center lead fw-normal">
-				<input name="user" type="hidden" value={{ user.getId() }}>
+				<input name="user" type="hidden" value="{{ user.getId() }}">
 				<button type="submit" class="btn btn-primary">Create</button>
 			</div>
 		</form>
-
-
 		<h2>Mes moyens de paiement</h2>
 
 		<ul class="list-group">
-            
-				{% for method in userMethodList %}
-                
-                    <li class="list-group-item">
-					{{ method.getType }} {{ method.getLabel }}
-					</li>
-				{% endfor %}
-                
-           
+			{% for method in userMethodList %}
+				<li class="list-group-item">{{ method.type }} : {{ method.name }}</li>
+			{% endfor %}
 		</ul>
 
 

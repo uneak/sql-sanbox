@@ -2,8 +2,8 @@
 
     namespace App\Models;
 
+    use App\Services\Payment\PaymentFactory;
     use App\Services\DatabaseConnection;
-    use App\Services\Payment\PaymentOptionsFactory;
     use DateTime;
     use PDO;
 
@@ -11,13 +11,13 @@
     {
         private PDO $connection;
         private UserManager $userManager;
-        private PaymentOptionsFactory $paymentOptionsFactory;
+        private PaymentFactory $paymentFactory;
 
         public function __construct()
         {
             $this->connection = DatabaseConnection::getInstance()->getConnection();
             $this->userManager = new UserManager();
-            $this->paymentOptionsFactory = new PaymentOptionsFactory();
+            $this->paymentFactory = new PaymentFactory();
         }
 
         /**
@@ -182,9 +182,8 @@
          */
         private function mapToPaymentMethod(array $paymentMethod): PaymentMethod
         {
-
             $dataArray = json_decode($paymentMethod['data'], true);
-            $paymentOptions = $this->paymentOptionsFactory->createPaymentOption($paymentMethod['type'], $dataArray);
+            $paymentOptions = $this->paymentFactory->createPaymentOption($paymentMethod['type'], $dataArray);
 
             return new PaymentMethod(
                 $paymentMethod['id'],
@@ -196,6 +195,21 @@
                 new DateTime($paymentMethod['updated_at'])
             );
         }
+
+        /**
+         * @throws \App\Payment\Exception\InvalidPaymentMethodException
+         */
+        public function pay(PaymentMethod $paymentMethod, float $amount): void
+        {
+            $user = $paymentMethod->getUser();
+            $type = $paymentMethod->getType();
+            $options = $paymentMethod->getData();
+
+            echo "## Paiement de $amount € par {$user->getFirstname()} {$user->getLastname()} avec la méthode $type<br/>";
+
+            ($this->paymentFactory->createPaymentMethod($type))->pay($amount, $options);
+        }
+
 
         /**
          * @throws \Exception
