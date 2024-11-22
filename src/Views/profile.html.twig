@@ -47,11 +47,7 @@
 			<select name="method" class="form-select form-select-lg mb-3" aria-label="Large select example">
 				<option selected>Method de payment</option>
 				
-				                {# <?php
-                    foreach ($methodList as $key => $classMethod) {
-                        echo "<option value=\"{$key}\">{$key}</li>";
-                    }
-                ?> #}
+				               
 
                     {% for key,value in methodList %} 
                        <option value="{{ key }}">{{ key }}</option>
@@ -69,15 +65,15 @@
 		<h2>Mes moyens de paiement</h2>
 
 		<ul class="list-group">
-            {# <?php #}
+            
 				{% for method in userMethodList %}
-                {# foreach ($userMethodList as $method) { #}
+                
                     <li class="list-group-item">
 					{{ method.getType }} {{ method.getLabel }}
 					</li>
 				{% endfor %}
-                {# } #}
-            {# ?> #}
+                
+           
 		</ul>
 
 
