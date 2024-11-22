@@ -25,5 +25,6 @@
         default => '404.php',
     };
 
+
     echo $content;
 
